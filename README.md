@@ -136,7 +136,7 @@ HU21: Autenticarse en el sistema
 
 ### URL
 
-GET /api/usuarios/login
+GET /api/users/login
 
 ### Request body
 
