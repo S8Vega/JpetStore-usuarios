@@ -8,8 +8,8 @@
         <version>2.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.JpetStore-usuarios</groupId>
-    <artifactId>JpetStore-usuarios</artifactId>
+    <groupId>com.jpet_store.users</groupId>
+    <artifactId>jpet_store.users</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>JpetStore-usuarios</name>
     <description>Demo project for Spring Boot</description>

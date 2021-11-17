@@ -7,13 +7,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountServiceImpl implements CrudServiceInterface<Account, Long>{
+@Service("AccountServiceImpl")
+public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountDao accountDao;
@@ -48,10 +50,16 @@ public class AccountServiceImpl implements CrudServiceInterface<Account, Long>{
         return accountDao.findByEmail(alias);
     }
 
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Account account = accountDao.findByEmail(email);
         List<GrantedAuthority> roles = new ArrayList<>();
         //roles.add(new SimpleGrantedAuthority(account.getRol().toString()));
         return new User(account.getEmail(), "{noop}" + account.getPassword(), roles);
+    }
+
+    @Override
+    public Account findByEmail(String email) {
+        return accountDao.findByEmail(email);
     }
 }
