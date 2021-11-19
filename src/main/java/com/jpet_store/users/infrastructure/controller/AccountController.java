@@ -15,10 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +42,7 @@ public class AccountController {
         Account newAccount = accountService.findByEmail(account.getEmail());
         if (newAccount == null) {
             accountService.save(account);
-            response.put("mensaje", "usuario creado correctamente");
+            response.put("message", "usuario creado correctamente");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
         } else {
             response.put("mensaje", "el email del usuario: " + account.getEmail() + " no esta disponible");
@@ -67,5 +64,47 @@ public class AccountController {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAccountById(@PathVariable Long id) {
+        Account account = accountService.findById(id);
+        if (account != null) {
+            return ResponseEntity.ok(account);
+        } else {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "usuario no encontrado");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAccountById(@PathVariable Long id, @RequestBody Account account) {
+        Account accountUpdate = accountService.findById(id);
+        Map<String, Object> response = new HashMap<>();
+        if (accountUpdate != null) {
+            account.setId(id);
+            accountService.save(account);
+            response.put("message", "usuario actualizado correctamente");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "usuario no encontrado");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<?> auth(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", jwtUtil.isTokenValid(request.get("jwt")) ? "true" : "false");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        jwtUtil.removeToken(request.get("jwt"));
+        response.put("message", "sesion cerrada correctamente");
+        return ResponseEntity.ok(response);
     }
 }

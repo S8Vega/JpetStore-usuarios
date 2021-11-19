@@ -109,7 +109,7 @@ HU18: Actualizar cuenta
 
 ### URL
 
-GET /api/users/${id}
+**PUT** /api/users/${id}
 
 ### Request body
 
@@ -137,7 +137,7 @@ HU21: Autenticarse en el sistema
 
 ### URL
 
-GET /api/users/login
+**POST** /api/users/login
 
 ### Request body
 

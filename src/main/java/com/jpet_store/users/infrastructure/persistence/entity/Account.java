@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Account extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String email;
 
     private String phone;
