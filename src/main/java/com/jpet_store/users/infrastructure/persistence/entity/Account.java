@@ -25,4 +25,8 @@ public class Account extends User implements Serializable {
     private String address;
 
     private String fullName;
+
+    private String profilePicture;
+
+    private String role;
 }
