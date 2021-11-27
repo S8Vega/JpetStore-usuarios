@@ -54,9 +54,9 @@ public class AccountController {
     public ResponseEntity<?> createToken(@RequestBody AuthenticationRequest request) {
         try {
             request.setPassword(DigestUtils.md5DigestAsHex(request.getPassword().getBytes()));
-            Account account = accountService.findByEmail(request.getCorreo());
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getPassword()));
-            UserDetails userDetails = accountService.loadUserByUsername(request.getCorreo());
+            Account account = accountService.findByEmail(request.getEmail());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            UserDetails userDetails = accountService.loadUserByUsername(request.getEmail());
             Map<String, Object> response = new HashMap<>();
             response.put("jwt", jwtUtil.generateToken(userDetails));
             return new ResponseEntity<>(response, HttpStatus.OK);

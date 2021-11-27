@@ -143,7 +143,7 @@ HU21: Autenticarse en el sistema
 
 ```json
 {
-  "correo": "test@test.com",
+  "email": "test@test.com",
   "password": "123456"
 }
 ```
