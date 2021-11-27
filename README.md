@@ -42,7 +42,9 @@ HU15: Crear cuenta, registro en el sistema
   "email": "test@test.com",
   "phone": "123456789",
   "address": "Calle falsa 123",
-  "fullName": "Test"
+  "fullName": "Test",
+  "profilePicture": "base64",
+  "role": "Administrador"
 }
 ```
 
