@@ -97,9 +97,10 @@ public class AccountController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> auth(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<?> auth(@RequestHeader("Authorization") String token) {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", jwtUtil.isTokenValid(jwt) ? "true" : "false");
+        response.put("message", jwtUtil.isTokenValid(token) ? "true" : "false");
+        response.put("user", jwtUtil.isTokenValid(token) ? accountService.findByEmail(jwtUtil.extractUsername(token)) : "usuario no logeado");
         return ResponseEntity.ok(response);
     }
 
