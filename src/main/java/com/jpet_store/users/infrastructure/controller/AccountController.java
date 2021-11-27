@@ -97,9 +97,9 @@ public class AccountController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> auth(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> auth(@RequestHeader("Authorization") String jwt) {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", jwtUtil.isTokenValid(request.get("jwt")) ? "true" : "false");
+        response.put("message", jwtUtil.isTokenValid(jwt) ? "true" : "false");
         return ResponseEntity.ok(response);
     }
 
