@@ -41,6 +41,9 @@ public class AccountController {
         Map<String, Object> response = new HashMap<>();
         Account newAccount = accountService.findByEmail(account.getEmail());
         if (newAccount == null) {
+            if (account.getRole() == null) {
+                account.setRole("USUARIO");
+            }
             accountService.save(account);
             response.put("message", "usuario creado correctamente");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
